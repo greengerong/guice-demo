@@ -4,6 +4,7 @@ import com.github.greengerong.app.AppModule;
 import com.github.greengerong.item.ItemService;
 import com.github.greengerong.item.ItemServiceImpl1;
 import com.github.greengerong.item.ItemServiceImpl2;
+import com.github.greengerong.order.Order;
 import com.github.greengerong.order.OrderService;
 import com.github.greengerong.order.OrderServiceImpl;
 import com.google.inject.Guice;
@@ -36,6 +37,7 @@ public class AppModuleTest {
         assertThat(instance, is(instanceOf(OrderServiceImpl.class)));
         assertThat(((OrderServiceImpl) instance).getItemService().get(0), is(instanceOf(ItemServiceImpl1.class)));
         assertThat(((OrderServiceImpl) instance).getItemService().get(1), is(instanceOf(ItemServiceImpl2.class)));
+        instance.add(new Order(100));
     }
 
     @Test
