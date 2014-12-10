@@ -18,7 +18,6 @@ public class ItemServiceImpl1 implements ItemService {
 
     @Override
     public Item get(int id) {
-        LOGGER.info("get item : {}", id);
         return null;
     }
 }

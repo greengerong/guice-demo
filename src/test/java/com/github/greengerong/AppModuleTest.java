@@ -1,6 +1,8 @@
 package com.github.greengerong;
 
 import com.github.greengerong.app.AppModule;
+import com.github.greengerong.runtime.RuntimeService;
+import com.github.greengerong.runtime.RuntimeServiceImpl;
 import com.github.greengerong.item.ItemService;
 import com.github.greengerong.item.ItemServiceImpl1;
 import com.github.greengerong.item.ItemServiceImpl2;
@@ -25,7 +27,7 @@ public class AppModuleTest {
 
     @Before
     public void setUp() throws Exception {
-        injector = Guice.createInjector(new AppModule());
+        injector = Guice.createInjector(new AppModule(new RuntimeServiceImpl()));
     }
 
     @Test
@@ -35,8 +37,8 @@ public class AppModuleTest {
         final OrderService instance = injector.getInstance(OrderService.class);
         //then
         assertThat(instance, is(instanceOf(OrderServiceImpl.class)));
-        assertThat(((OrderServiceImpl) instance).getItemService().get(0), is(instanceOf(ItemServiceImpl1.class)));
-        assertThat(((OrderServiceImpl) instance).getItemService().get(1), is(instanceOf(ItemServiceImpl2.class)));
+        assertThat(((OrderServiceImpl) instance).getItemServices().get(0), is(instanceOf(ItemServiceImpl1.class)));
+        assertThat(((OrderServiceImpl) instance).getItemServices().get(1), is(instanceOf(ItemServiceImpl2.class)));
         instance.add(new Order(100));
     }
 
@@ -51,5 +53,17 @@ public class AppModuleTest {
         assertThat(instance.size(), is(2));
         assertThat(instance.get(0), is(instanceOf(ItemServiceImpl1.class)));
         assertThat(instance.get(1), is(instanceOf(ItemServiceImpl2.class)));
+    }
+
+    @Test
+    public void should_register_service_runtime() throws Exception {
+        //given
+
+        //when
+        final RuntimeService instance = injector.getInstance(RuntimeService.class);
+        //then
+
+        assertThat(instance, is(instanceOf(RuntimeServiceImpl.class)));
+
     }
 }

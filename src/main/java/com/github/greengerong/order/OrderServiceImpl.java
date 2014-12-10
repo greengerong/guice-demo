@@ -19,34 +19,33 @@ import java.util.List;
  */
 public class OrderServiceImpl implements OrderService {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
-    private List<ItemService> itemService;
+    private List<ItemService> itemServices;
 
     public OrderServiceImpl() {
     }
 
     @Inject
-    public OrderServiceImpl(List<ItemService> itemService) {
-        this.itemService = itemService;
+    public OrderServiceImpl(List<ItemService> itemServices) {
+        this.itemServices = itemServices;
     }
 
     @Override
     public void add(Order order) {
-        LOGGER.info("add order: {}", order);
     }
 
     @Override
     public void remove(Order order) {
-        LOGGER.info("remove order: {}", order);
     }
 
     @Override
     public Order get(int id) {
-        itemService.get(id);
-        LOGGER.info("add order: {}", id);
+        for (ItemService item : itemServices) {
+            item.get(id);
+        }
         return new Order(id);
     }
 
-    public List<ItemService> getItemService() {
-        return itemService;
+    public List<ItemService> getItemServices() {
+        return itemServices;
     }
 }
