@@ -1,5 +1,6 @@
-package com.github.greengerong;
+package com.github.greengerong.order;
 
+import com.github.greengerong.item.ItemService;
 import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

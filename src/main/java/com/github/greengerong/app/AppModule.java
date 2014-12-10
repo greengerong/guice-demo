@@ -1,12 +1,15 @@
-package com.github.greengerong;
+package com.github.greengerong.app;
 
+import com.github.greengerong.item.ItemService;
+import com.github.greengerong.item.ItemServiceImpl1;
+import com.github.greengerong.item.ItemServiceImpl2;
+import com.github.greengerong.order.OrderService;
+import com.github.greengerong.order.OrderServiceImpl;
+import com.google.common.collect.ImmutableList;
 import com.google.inject.*;
 import com.google.inject.Provider;
-import com.google.inject.spi.*;
 
-import javax.inject.*;
 import java.util.List;
-import java.util.Set;
 
 import static com.google.common.collect.ImmutableList.of;
 
@@ -30,7 +33,7 @@ public class AppModule implements Module {
         }).toProvider(new Provider<List<ItemService>>() {
             @Override
             public List<ItemService> get() {
-                return of(new ItemServiceImpl1(), new ItemServiceImpl2());
+                return ImmutableList.of(new ItemServiceImpl1(), new ItemServiceImpl2());
             }
         });
     }

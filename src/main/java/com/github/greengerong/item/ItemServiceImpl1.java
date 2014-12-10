@@ -1,4 +1,4 @@
-package com.github.greengerong;
+package com.github.greengerong.item;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

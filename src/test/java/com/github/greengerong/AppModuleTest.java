@@ -1,5 +1,11 @@
 package com.github.greengerong;
 
+import com.github.greengerong.app.AppModule;
+import com.github.greengerong.item.ItemService;
+import com.github.greengerong.item.ItemServiceImpl1;
+import com.github.greengerong.item.ItemServiceImpl2;
+import com.github.greengerong.order.OrderService;
+import com.github.greengerong.order.OrderServiceImpl;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
