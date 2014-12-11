@@ -8,7 +8,10 @@ import com.github.greengerong.order.OrderServiceImpl;
 import com.github.greengerong.price.PriceService;
 import com.github.greengerong.runtime.RuntimeService;
 import com.github.greengerong.runtime.RuntimeServiceImpl;
+import com.google.common.collect.ImmutableList;
 import com.google.inject.*;
+import com.google.inject.name.Named;
+import com.google.inject.name.Names;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,18 +45,23 @@ public class AppModule implements Module {
         if (LOGGER.isDebugEnabled()) {
             binder.bindInterceptor(any(), any(), exception());
         }
+        //TODO: bind interface
         binder.bind(OrderService.class).to(OrderServiceImpl.class).in(SINGLETON);
+        //TODO: bind self class(without interface or base class)
         binder.requestStaticInjection(PriceService.class);
-        binder.bind(new TypeLiteral<List<ItemService>>() {
 
-        }).toProvider(new Provider<List<ItemService>>() {
-            @Override
-            public List<ItemService> get() {
-                return of(new ItemServiceImpl1(), new ItemServiceImpl2());
-            }
-        });
+        //TODO: bind named instance;
+        binder.bind(ItemService.class).annotatedWith(Names.named("impl1")).to(ItemServiceImpl1.class);
+        binder.bind(ItemService.class).annotatedWith(Names.named("impl2")).to(ItemServiceImpl2.class);
 
+        //TODO: bind instance not class.
         binder.bind(RuntimeService.class).toInstance(runtimeService);
+    }
+
+    @Provides
+    public List<ItemService> getAllItemServices(@Named("impl1") ItemService itemService1,
+                                                @Named("impl2") ItemService itemService2) {
+        return of(itemService1, itemService2);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.github.greengerong.item;
 
+import com.google.inject.name.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
