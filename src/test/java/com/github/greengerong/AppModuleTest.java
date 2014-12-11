@@ -1,6 +1,7 @@
 package com.github.greengerong;
 
 import com.github.greengerong.app.AppModule;
+import com.github.greengerong.price.PriceService;
 import com.github.greengerong.runtime.RuntimeService;
 import com.github.greengerong.runtime.RuntimeServiceImpl;
 import com.github.greengerong.item.ItemService;
@@ -39,6 +40,7 @@ public class AppModuleTest {
         assertThat(instance, is(instanceOf(OrderServiceImpl.class)));
         assertThat(((OrderServiceImpl) instance).getItemServices().get(0), is(instanceOf(ItemServiceImpl1.class)));
         assertThat(((OrderServiceImpl) instance).getItemServices().get(1), is(instanceOf(ItemServiceImpl2.class)));
+        assertThat(((OrderServiceImpl) instance).getPriceService(), is(instanceOf(PriceService.class)));
         instance.add(new Order(100));
     }
 
@@ -64,6 +66,6 @@ public class AppModuleTest {
         //then
 
         assertThat(instance, is(instanceOf(RuntimeServiceImpl.class)));
-
+        final ItemServiceImpl1 instance1 = injector.getInstance(ItemServiceImpl1.class);
     }
 }

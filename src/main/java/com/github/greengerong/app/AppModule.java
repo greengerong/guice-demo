@@ -5,6 +5,7 @@ import com.github.greengerong.item.ItemServiceImpl1;
 import com.github.greengerong.item.ItemServiceImpl2;
 import com.github.greengerong.order.OrderService;
 import com.github.greengerong.order.OrderServiceImpl;
+import com.github.greengerong.price.PriceService;
 import com.github.greengerong.runtime.RuntimeService;
 import com.github.greengerong.runtime.RuntimeServiceImpl;
 import com.google.inject.*;
@@ -42,6 +43,7 @@ public class AppModule implements Module {
             binder.bindInterceptor(any(), any(), exception());
         }
         binder.bind(OrderService.class).to(OrderServiceImpl.class).in(SINGLETON);
+        binder.requestStaticInjection(PriceService.class);
         binder.bind(new TypeLiteral<List<ItemService>>() {
 
         }).toProvider(new Provider<List<ItemService>>() {
