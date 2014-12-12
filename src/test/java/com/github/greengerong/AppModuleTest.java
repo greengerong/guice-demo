@@ -19,6 +19,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.sameInstance;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -66,6 +67,17 @@ public class AppModuleTest {
         //then
 
         assertThat(instance, is(instanceOf(RuntimeServiceImpl.class)));
-        final ItemServiceImpl1 instance1 = injector.getInstance(ItemServiceImpl1.class);
+    }
+
+    @Test
+    public void should_be_singleton_for_one_without_interface_bean() throws Exception {
+        //given
+
+        //when
+        final PriceService first = injector.getInstance(PriceService.class);
+        final PriceService second = injector.getInstance(PriceService.class);
+        //then
+
+        assertThat(first, is(sameInstance(second)));
     }
 }

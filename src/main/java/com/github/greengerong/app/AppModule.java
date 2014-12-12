@@ -8,8 +8,10 @@ import com.github.greengerong.order.OrderServiceImpl;
 import com.github.greengerong.price.PriceService;
 import com.github.greengerong.runtime.RuntimeService;
 import com.github.greengerong.runtime.RuntimeServiceImpl;
-import com.google.common.collect.ImmutableList;
-import com.google.inject.*;
+import com.google.inject.Binder;
+import com.google.inject.Module;
+import com.google.inject.Provides;
+import com.google.inject.Scopes;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 import org.slf4j.Logger;
@@ -48,7 +50,7 @@ public class AppModule implements Module {
         //TODO: bind interface
         binder.bind(OrderService.class).to(OrderServiceImpl.class).in(SINGLETON);
         //TODO: bind self class(without interface or base class)
-        binder.requestStaticInjection(PriceService.class);
+        binder.bind(PriceService.class).in(Scopes.SINGLETON);
 
         //TODO: bind named instance;
         binder.bind(ItemService.class).annotatedWith(Names.named("impl1")).to(ItemServiceImpl1.class);

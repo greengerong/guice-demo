@@ -11,6 +11,7 @@ package com.github.greengerong.price;
  * ****************************************
  */
 public class PriceService {
+
     public String getPrice() {
         return "price";
     }
