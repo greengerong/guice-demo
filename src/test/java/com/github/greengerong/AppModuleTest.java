@@ -1,6 +1,7 @@
 package com.github.greengerong;
 
 import com.github.greengerong.app.AppModule;
+import com.github.greengerong.named.NamedService;
 import com.github.greengerong.price.PriceService;
 import com.github.greengerong.runtime.RuntimeService;
 import com.github.greengerong.runtime.RuntimeServiceImpl;
@@ -10,13 +11,16 @@ import com.github.greengerong.item.ItemServiceImpl2;
 import com.github.greengerong.order.Order;
 import com.github.greengerong.order.OrderService;
 import com.github.greengerong.order.OrderServiceImpl;
+import com.google.common.collect.Lists;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.sameInstance;
@@ -39,8 +43,9 @@ public class AppModuleTest {
         final OrderService instance = injector.getInstance(OrderService.class);
         //then
         assertThat(instance, is(instanceOf(OrderServiceImpl.class)));
-        assertThat(((OrderServiceImpl) instance).getItemServices().get(0), is(instanceOf(ItemServiceImpl1.class)));
-        assertThat(((OrderServiceImpl) instance).getItemServices().get(1), is(instanceOf(ItemServiceImpl2.class)));
+        final List<ItemService> itemServices = Lists.newArrayList(((OrderServiceImpl) instance).getItemServices());
+        assertThat(itemServices.get(0), is(instanceOf(ItemServiceImpl1.class)));
+        assertThat(itemServices.get(1), is(instanceOf(ItemServiceImpl2.class)));
         assertThat(((OrderServiceImpl) instance).getPriceService(), is(instanceOf(PriceService.class)));
         instance.add(new Order(100));
     }
@@ -50,8 +55,10 @@ public class AppModuleTest {
         //given
 
         //when
-        final List<ItemService> instance = injector.getInstance(new Key<List<ItemService>>() {
-        });
+        final List<ItemService> instance = Lists.newArrayList(
+                injector.getInstance(new Key<Set<ItemService>>() {
+                })
+        );
         //then
         assertThat(instance.size(), is(2));
         assertThat(instance.get(0), is(instanceOf(ItemServiceImpl1.class)));
@@ -79,5 +86,17 @@ public class AppModuleTest {
         //then
 
         assertThat(first, is(sameInstance(second)));
+    }
+
+    @Test
+    public void should_get_named_service_with_Provides_bean() throws Exception {
+        //given
+
+        //when
+        final List<NamedService> namedServices = injector.getInstance(new Key<List<NamedService>>() {
+        });
+        //then
+
+        assertThat(namedServices.size(), is(2));
     }
 }
